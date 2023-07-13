@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  master:
+    image: locust-master
+    build: ./
+    ports:
+      - '8089:8089'
+    volumes:
+      - ./:/mnt/locust
+    # environment:
+    #   - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+    #   - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    #   - AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}
+    command: -f /mnt/locust/script.py --master -H http://master:8089
+
+  worker1:
+    image: locust-work
+    build: ./
+    volumes:
+      - ./:/mnt/locust
+    # environment:
+    #   - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+    #   - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    #   - AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}
+    command: -f /mnt/locust/script.py --worker --master-host master
+
+  worker2:
+    image: locust-work
+    build: ./
+    volumes:
+      - ./:/mnt/locust
+    # environment:
+    #   - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+    #   - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    #   - AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}
+    command: -f /mnt/locust/script.py --worker --master-host master
+
+  worker3:
+    image: locust-work
+    build: ./
+    volumes:
+      - ./:/mnt/locust
+    # environment:
+    #   - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+    #   - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    #   - AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}
+    command: -f /mnt/locust/script.py --worker --master-host master
